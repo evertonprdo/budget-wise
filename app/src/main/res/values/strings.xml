@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Budget Wise</string>
+    <string name="currency_symbol">$</string>
+    <string name="decimal_separator">.</string>
+    <string name="currency_input">Currency Input</string>
+    <string name="currency_input_on_click_label">Fill the amount</string>
 </resources>
