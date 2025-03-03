@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
@@ -22,50 +23,68 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.evertonprdo.budgetwise.ui.theme.BudgetWiseTheme
 
 @Composable
-fun HighlightedInput(
-    textFieldValue: TextFieldValue,
-    onValueChange: (TextFieldValue) -> Unit,
+fun FancyCurrencyTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    highlightedText: HighlightedText = HighlightedText(),
     focusManager: FocusManager = LocalFocusManager.current,
     focusRequester: FocusRequester = remember { FocusRequester() },
-    keyboardOptions: KeyboardOptions = KeyboardOptions(
-        keyboardType = KeyboardType.Number,
-        imeAction = ImeAction.Done,
-    ),
-    keyboardActions: KeyboardActions = KeyboardActions(
-        onDone = { focusManager.clearFocus() }
-    )
+    prefix: String = "$",
+    separator: String = ".",
 ) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .clickable {
+            .semantics(mergeDescendants = true) {
+                contentDescription = "Currency Input"
+            }
+            .clickable(onClickLabel = "Fill the amount") {
                 focusManager.clearFocus()
                 focusRequester.requestFocus()
             }
     ) {
+        val highlightedText = if (value.length > 2) {
+            val splitIndex = value.length - 2
+
+            HighlightedText(
+                prefix = prefix,
+                suffix = value.substring(splitIndex),
+                text = value
+                    .substring(0, splitIndex)
+                    .formatStringWithSeparator(separator),
+            )
+        } else {
+            HighlightedText(
+                prefix = prefix,
+                text = "0",
+                suffix = value.padStart(2, '0')
+            )
+        }
+
         HighlightText(highlightedText)
 
-        // Hidden field to handle user input, it seems like it's possible
-        // to build a class to do this with PlatformTextInputModifierNode
+        // Hidden field to handle user input
         BasicTextField(
-            value = textFieldValue,
-            onValueChange = onValueChange,
+            value = value,
+            onValueChange = { onValueChange(it.getDigits()) },
             singleLine = true,
-            textStyle = TextStyle.Default,
-            keyboardOptions = keyboardOptions,
-            keyboardActions = keyboardActions,
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Done,
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = { focusManager.clearFocus() }
+            ),
             modifier = Modifier
                 .size(1.dp)
                 .alpha(0f)
@@ -85,10 +104,10 @@ private fun HighlightText(
     ) {
         Text(
             text = highlightedText.prefix,
-            style = MaterialTheme.typography.displaySmall,
+            style = MaterialTheme.typography.headlineLarge,
             softWrap = false,
             modifier = Modifier
-                .paddingFromBaseline(top = 44.sp)
+                .paddingFromBaseline(top = 40.sp)
 
         )
         Text(
@@ -99,34 +118,50 @@ private fun HighlightText(
 
         Text(
             text = highlightedText.suffix,
-            style = MaterialTheme.typography.displaySmall,
+            style = MaterialTheme.typography.headlineLarge,
             softWrap = false,
 
             modifier = Modifier
-                .paddingFromBaseline(top = 44.sp)
+                .paddingFromBaseline(top = 40.sp)
         )
     }
 }
 
-data class HighlightedText(
+private data class HighlightedText(
     val prefix: String = "",
     val text: String = "",
     val suffix: String = ""
 )
 
+private fun String.getDigits(): String =
+    this.filter { it.isDigit() }
+
+private fun String.formatStringWithSeparator(separator: String = "."): String {
+    if (this.isEmpty()) return this
+
+    val firstGroupSize = this.length % 3
+
+    val firstGroup = this.take(firstGroupSize)
+    val remainingGroups = this.drop(firstGroupSize).chunked(3)
+
+    if (firstGroupSize == 0)
+        return remainingGroups.joinToString(separator)
+
+    return arrayOf(firstGroup)
+        .plus(remainingGroups)
+        .joinToString(separator)
+}
+
 @Preview
 @Composable
 private fun HighlightedInputPreview() {
     BudgetWiseTheme {
-        HighlightedInput(
-            textFieldValue = TextFieldValue("10000000"),
+        FancyCurrencyTextField(
+            value = "10000000",
             onValueChange = {},
-            highlightedText = HighlightedText(
-                prefix = "$",
-                text = "100.000",
-                suffix = "00",
-            ),
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
         )
     }
 }
