@@ -4,7 +4,7 @@ import com.evertonprdo.budgetwise.model.Category
 import java.util.Date
 
 data class TransactionWithCategory(
-    val id: Long,
+    val id: String,
 
     val type: TransactionType,
     val cents: Long,

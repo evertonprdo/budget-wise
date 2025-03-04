@@ -12,7 +12,3 @@ enum class TransactionType(displayName: String) {
         }
     }
 }
-
-fun a() {
-    TransactionType.entries[0]
-}

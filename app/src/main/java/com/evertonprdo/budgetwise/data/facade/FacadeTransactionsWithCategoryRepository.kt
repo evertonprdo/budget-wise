@@ -17,7 +17,7 @@ class FacadeTransactionsWithCategoryRepository(
             it.map { transaction ->
                 TransactionWithCategoryMapper.toDomain(
                     transaction,
-                    categoriesRepository.findCategory(transaction.categoryId)
+                    categoriesRepository.find(transaction.categoryId)
                 )
             }
         }

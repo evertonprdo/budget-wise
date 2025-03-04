@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "transactions")
 data class Transaction(
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    @PrimaryKey
+    val id: String,
 
     val type: Int,
     val cents: Long,
@@ -16,7 +16,7 @@ data class Transaction(
 
     // @feature: categories management
     @ColumnInfo(name = "category_id")
-    val categoryId: Long,
+    val categoryId: Int,
 
     @ColumnInfo(name = "created_at")
     val createdAt: Long = System.currentTimeMillis() / 1000,

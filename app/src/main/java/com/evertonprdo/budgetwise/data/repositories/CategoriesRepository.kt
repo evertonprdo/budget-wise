@@ -3,5 +3,6 @@ package com.evertonprdo.budgetwise.data.repositories
 import com.evertonprdo.budgetwise.model.Category
 
 interface CategoriesRepository {
-    fun findCategory(id: Long): Category
+    fun find(id: Int): Category
+    fun getAll(): List<Category>
 }

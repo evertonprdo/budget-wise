@@ -1,6 +1,5 @@
 package com.evertonprdo.budgetwise.data.repositories
 
-import com.evertonprdo.budgetwise.model.Transaction
 import com.evertonprdo.budgetwise.model.valueobjects.TransactionWithCategory
 import kotlinx.coroutines.flow.Flow
 
