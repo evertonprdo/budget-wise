@@ -4,11 +4,13 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+// @feature: management categories
 @Entity(tableName = "categories")
 data class Category(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
 
+    @ColumnInfo(index = true)
     val name: String,
 
     @ColumnInfo(name = "display_name")

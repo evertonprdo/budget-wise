@@ -5,6 +5,7 @@ import androidx.room.Query
 import com.evertonprdo.budgetwise.data.room.entities.relations.TransactionWithCategory
 import kotlinx.coroutines.flow.Flow
 
+// @feature: management categories
 @Dao
 interface TransactionWithCategoryDao {
     @Query(

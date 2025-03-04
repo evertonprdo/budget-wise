@@ -2,8 +2,8 @@ package com.evertonprdo.budgetwise.room
 
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.evertonprdo.budgetwise.data.local.LocalCategory.categories
 import com.evertonprdo.budgetwise.data.room.AppDatabase
+import com.evertonprdo.budgetwise.data.room.entities.Category
 
 object RoomInMemoryDatabase {
     fun getDatabase(): AppDatabase {
@@ -18,6 +18,23 @@ object RoomInMemoryDatabase {
         seedCategories(appDatabase)
         return appDatabase
     }
+
+    val categories = listOf(
+        Category(
+            id = 1,
+            name = "test-01",
+            displayName = "Test category 1",
+            color = "#ad46ff",
+            iconKey = "building-store"
+        ),
+        Category(
+            id = 2,
+            name = "test-02",
+            displayName = "Test category 2",
+            color = "#00bc7d",
+            iconKey = "refresh"
+        )
+    )
 
     private fun seedCategories(database: AppDatabase) {
         val values = categories

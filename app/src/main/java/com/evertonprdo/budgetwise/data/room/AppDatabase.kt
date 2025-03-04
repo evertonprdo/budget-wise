@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.evertonprdo.budgetwise.data.room.dao.TransactionDao
-import com.evertonprdo.budgetwise.data.room.dao.TransactionWithCategoryDao
 import com.evertonprdo.budgetwise.data.room.entities.Category
 import com.evertonprdo.budgetwise.data.room.entities.Transaction
 
@@ -17,7 +16,9 @@ import com.evertonprdo.budgetwise.data.room.entities.Transaction
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun transactionDao(): TransactionDao
-    abstract fun transactionWithCategoryDao(): TransactionWithCategoryDao
+
+    // @feature: management categories
+    // abstract fun transactionWithCategoryDao(): TransactionWithCategoryDao
 
     companion object {
         @Volatile

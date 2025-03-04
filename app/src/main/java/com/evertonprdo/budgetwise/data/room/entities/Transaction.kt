@@ -9,11 +9,12 @@ data class Transaction(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
 
-    val type: String,
+    val type: Int,
     val cents: Long,
     val date: Long,
     val description: String,
 
+    // @feature: management categories
     @ColumnInfo(name = "category_id")
     val categoryId: Long,
 
