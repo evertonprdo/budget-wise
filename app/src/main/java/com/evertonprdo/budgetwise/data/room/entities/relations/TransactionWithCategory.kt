@@ -5,7 +5,7 @@ import androidx.room.Relation
 import com.evertonprdo.budgetwise.data.room.entities.Category
 import com.evertonprdo.budgetwise.data.room.entities.Transaction
 
-// @feature: management categories
+// @feature: categories management
 data class TransactionWithCategory(
     @Embedded val category: Category,
     @Relation(

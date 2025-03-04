@@ -14,7 +14,7 @@ data class Transaction(
     val date: Long,
     val description: String,
 
-    // @feature: management categories
+    // @feature: categories management
     @ColumnInfo(name = "category_id")
     val categoryId: Long,
 

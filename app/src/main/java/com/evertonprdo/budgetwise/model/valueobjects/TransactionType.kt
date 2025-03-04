@@ -1,4 +1,4 @@
-package com.evertonprdo.budgetwise.model
+package com.evertonprdo.budgetwise.model.valueobjects
 
 enum class TransactionType(displayName: String) {
     INCOME(displayName = "income"),
@@ -11,4 +11,8 @@ enum class TransactionType(displayName: String) {
             else -> throw IllegalArgumentException()
         }
     }
+}
+
+fun a() {
+    TransactionType.entries[0]
 }

@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-// @feature: management categories
+// @feature: categories management
 @Entity(tableName = "categories")
 data class Category(
     @PrimaryKey(autoGenerate = true)

@@ -2,10 +2,8 @@ package com.evertonprdo.budgetwise.data.room.repositories.mapper
 
 import com.evertonprdo.budgetwise.data.utils.DateHelper
 import com.evertonprdo.budgetwise.data.utils.DateHelper.parseToUnix
-import com.evertonprdo.budgetwise.model.Category
 import com.evertonprdo.budgetwise.model.Transaction
-import com.evertonprdo.budgetwise.model.TransactionType
-import com.evertonprdo.budgetwise.model.valueobjects.TransactionWithCategory
+import com.evertonprdo.budgetwise.model.valueobjects.TransactionType
 import com.evertonprdo.budgetwise.data.room.entities.Transaction as RoomTransaction
 
 typealias A = RoomTransaction

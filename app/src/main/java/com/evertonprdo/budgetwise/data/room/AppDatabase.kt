@@ -17,7 +17,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun transactionDao(): TransactionDao
 
-    // @feature: management categories
+    // @feature: categories management
     // abstract fun transactionWithCategoryDao(): TransactionWithCategoryDao
 
     companion object {

@@ -1,5 +1,6 @@
 package com.evertonprdo.budgetwise.model
 
+import com.evertonprdo.budgetwise.model.valueobjects.TransactionType
 import java.util.Date
 
 data class Transaction(
