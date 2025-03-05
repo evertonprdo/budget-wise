@@ -30,6 +30,7 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -46,7 +47,6 @@ fun FancyCurrencyTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
-    focusManager: FocusManager = LocalFocusManager.current,
     focusRequester: FocusRequester = remember { FocusRequester() },
     prefix: String = stringResource(R.string.currency_symbol),
     separator: String = stringResource(R.string.decimal_separator),
@@ -60,8 +60,12 @@ fun FancyCurrencyTextField(
         )
     }
 
+    val focusManager: FocusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     val currencyInput = stringResource(R.string.currency_input)
-    val currencyInputOnClickLabel = stringResource(R.string.currency_input_on_click_label)
+    val currencyInputOnClickLabel =
+        stringResource(R.string.currency_input_on_click_label)
 
     Box(
         contentAlignment = Alignment.Center,
@@ -114,7 +118,7 @@ fun FancyCurrencyTextField(
                 imeAction = ImeAction.Done,
             ),
             keyboardActions = KeyboardActions(
-                onDone = { focusManager.clearFocus() }
+                onDone = { keyboardController?.hide() }
             ),
             modifier = Modifier
                 .size(1.dp)
