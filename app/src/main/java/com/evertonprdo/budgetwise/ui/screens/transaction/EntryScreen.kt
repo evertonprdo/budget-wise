@@ -1,11 +1,8 @@
 package com.evertonprdo.budgetwise.ui.screens.transaction
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -31,7 +28,6 @@ import com.evertonprdo.budgetwise.model.Category
 import com.evertonprdo.budgetwise.ui.AppViewModelProvider
 import com.evertonprdo.budgetwise.ui.components.DatePickerTextField
 import com.evertonprdo.budgetwise.ui.components.FancyCurrencyTextField
-import com.evertonprdo.budgetwise.ui.components.SelectCategoryOptions
 import com.evertonprdo.budgetwise.ui.components.SelectCategoryTextField
 import com.evertonprdo.budgetwise.ui.theme.BudgetWiseTheme
 
@@ -54,67 +50,54 @@ fun EntryScreen(viewModel: EntryScreenViewModel = viewModel(factory = AppViewMod
         when (currentStep) {
             0 -> {
                 Column {
-                    Text("Header")
-                    FancyCurrencyTextField("", {})
+                    InputWrapper("Title") {
+                        FancyCurrencyTextField("", {})
+                    }
                 }
             }
 
             1 -> {
-                Box(Modifier.fillMaxSize()) {
-                    val textFieldHeight =
-                        dimensionResource(R.dimen.text_field_height)
-                    val selectWrapperHeight = textFieldHeight + 40.dp
+                val textFieldHeight =
+                    dimensionResource(R.dimen.text_field_height)
+                val selectWrapperHeight = textFieldHeight + 40.dp
 
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(16.dp),
-                        modifier = Modifier.padding(top = selectWrapperHeight + 16.dp)
-                    ) {
-                        InputWrapper(title = "Date") {
-                            DatePickerTextField(
-                                datePicker = rememberDatePickerState(),
-                                displayedDate = "TO/DO/2025",
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-
-                        InputWrapper(title = "Description") {
-                            TextField(
-                                value = "",
-                                onValueChange = {},
-                                placeholder = { Text("Description") },
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.padding(top = selectWrapperHeight + 16.dp)
+                ) {
+                    var showOptions by remember { mutableStateOf(false) }
+                    var selectedCategory by remember {
+                        mutableStateOf(
+                            Category.DEFAULT_CATEGORY
+                        )
                     }
 
-                    Column {
-                        var showOptions by remember { mutableStateOf(false) }
-                        var selectedCategory by remember {
-                            mutableStateOf(
-                                Category.DEFAULT_CATEGORY
-                            )
-                        }
-
-                        InputWrapper(
-                            title = "Category",
-                            modifier = Modifier.height(selectWrapperHeight)
-                        ) {
-                            SelectCategoryTextField(
-                                onFocus = showOptions,
-                                selected = selectedCategory,
-                                onClick = { showOptions = !showOptions },
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                        }
-
-                        SelectCategoryOptions(
+                    InputWrapper(title = "Category") {
+                        SelectCategoryTextField(
+                            selected = selectedCategory,
                             categories = uiState.categories,
+                            expanded = showOptions,
+                            onClick = { showOptions = !showOptions },
                             onSelect = {
-                                selectedCategory = it
                                 showOptions = false
-                            },
-                            shownOptions = showOptions,
+                                selectedCategory = it
+                            })
+                    }
+
+                    InputWrapper(title = "Date") {
+                        DatePickerTextField(
+                            datePicker = rememberDatePickerState(),
+                            displayedDate = "TO/DO/2025",
                             modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+
+                    InputWrapper(title = "Description") {
+                        TextField(
+                            value = "",
+                            onValueChange = {},
+                            placeholder = { Text("Description") },
+                            modifier = Modifier.fillMaxWidth(),
                         )
                     }
                 }
