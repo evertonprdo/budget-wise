@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
-import com.evertonprdo.budgetwise.ui.screens.transaction.EntryScreen
+import com.evertonprdo.budgetwise.ui.screens.ColorsTest
 import com.evertonprdo.budgetwise.ui.theme.BudgetWiseTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +32,7 @@ fun BudgetWiseApp() {
                     .fillMaxSize()
                     .padding(innerPadding)
             ) {
-                EntryScreen()
+                ColorsTest()
             }
         }
     }
